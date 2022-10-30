@@ -13,7 +13,7 @@ import org.hibernate.Transaction;
 public class DestinoDaoImpl implements DestinoDaoInterface {
 
 	@Override
-	public Destino getDestinoById(int id) {
+	public Destino getDestinoById(Long id) {
 		
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			
@@ -30,7 +30,7 @@ public class DestinoDaoImpl implements DestinoDaoInterface {
 	}
 
 	@Override
-	public Long create(Destino destino) {
+	public Destino create(Destino destino) {
 		Transaction transaction = null;
         
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -38,7 +38,8 @@ public class DestinoDaoImpl implements DestinoDaoInterface {
             transaction = session.beginTransaction();
             session.saveOrUpdate(destino);
             transaction.commit();
-            return destino.getId();
+            
+            return destino;
             
         } catch (Exception e) {
         	
@@ -47,7 +48,7 @@ public class DestinoDaoImpl implements DestinoDaoInterface {
             }
             e.printStackTrace();
         }
-        return -1L;
+        return null;
 	}
 
 	@Override

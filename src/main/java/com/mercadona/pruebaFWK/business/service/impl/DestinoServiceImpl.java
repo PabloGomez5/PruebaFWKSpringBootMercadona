@@ -9,6 +9,7 @@ import com.mercadona.pruebaFWK.business.dao.DestinoDaoInterface;
 import com.mercadona.pruebaFWK.business.domain.Destino;
 import com.mercadona.pruebaFWK.business.dto.DestinoDto;
 import com.mercadona.pruebaFWK.business.service.DestinoServiceInterface;
+import com.mercadona.pruebaFWK.helper.AssemblerDestino;
 
 @Service
 public class DestinoServiceImpl implements DestinoServiceInterface {
@@ -17,17 +18,27 @@ public class DestinoServiceImpl implements DestinoServiceInterface {
 	private DestinoDaoInterface dao;
 
 	@Override
-	public Long create(//DestinoDto dto
-			) {
+	public DestinoDto create(DestinoDto dto) {
 		
-		Destino new11 = new Destino();
-		new11.setNombre("a new one");
+		Destino domain = new Destino();
 		
-		Long d_id = dao.create(new11);
+		AssemblerDestino.dtoToDomain(domain, dto);
 		
-    	System.out.println("Created destino with id " + d_id);
+		Destino result = dao.create(domain);
 		
-		return d_id;
+    	System.out.println("Created destino with id " + result.getId());
+    	
+		return AssemblerDestino.domainToDto(result);
+		
+	}
+	
+	@Override
+	public DestinoDto read(Long id) {
+		
+		Destino domain = dao.getDestinoById(id);
+		
+		return AssemblerDestino.domainToDto(domain);
+
 	}
 
 	@Override
@@ -36,11 +47,6 @@ public class DestinoServiceImpl implements DestinoServiceInterface {
 		return null;
 	}
 
-	@Override
-	public DestinoDto read(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void update(DestinoDto dto) {

@@ -7,13 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-
 import com.mercadona.pruebaFWK.business.dto.DestinoDto;
 import com.mercadona.pruebaFWK.business.service.DestinoServiceInterface;
  
@@ -25,14 +24,41 @@ public class DestinoController{
 	@Autowired
 	private DestinoServiceInterface service;
 	
-	@ResponseStatus(HttpStatus.CREATED)
+	
 	@PostMapping
-	public Long create(//@Valid @RequestBody DestinoDto dto
-			) {
+	public ResponseEntity<DestinoDto> create(@RequestBody DestinoDto dto) {
 		
-		return service.create();
+		DestinoDto result = service.create(dto);
+		
+		if (result == null) {
+			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			
+		}else {
+			
+			return  ResponseEntity.ok(result);
+			
+		}
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<DestinoDto> read(@PathVariable(required = true, name = "id") Long id) {
+		
+		DestinoDto result =  service.read(id);
+		
+		if (result == null) {
+			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			
+		}else {
+			
+			return  ResponseEntity.ok(result);
+			
+		}
 		
 	}
+	
+	
 	
 	@GetMapping
 	public List<DestinoDto> list() {
@@ -41,10 +67,6 @@ public class DestinoController{
 		
 	}
 	
-	@GetMapping("/{id}")
-	public DestinoDto read(@PathVariable(required = true, name = "id") Long id) {
-		return service.read(id);
-	}
 	
 	@PutMapping
 	public void update(//@Valid 

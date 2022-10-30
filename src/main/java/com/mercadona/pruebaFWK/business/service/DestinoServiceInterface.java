@@ -6,7 +6,7 @@ import com.mercadona.pruebaFWK.business.dto.DestinoDto;
 
 public interface DestinoServiceInterface {
 
-	Long create();
+	DestinoDto create(DestinoDto dto);
 
 	List<DestinoDto> list();
 
