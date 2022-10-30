@@ -10,12 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 //import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="PRODUCTO")
+@NamedQueries({ 
+	@NamedQuery(name = "Producto.GetByEAN", query="SELECT p FROM Producto p WHERE (p.codigo=: codigo) AND  (p.provedor.codigo =: codigoProvedor) AND (p.destino.id =: idDestino);")
+	})
 public class Producto {
 
 	@Id
