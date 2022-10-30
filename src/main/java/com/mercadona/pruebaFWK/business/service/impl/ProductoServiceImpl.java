@@ -30,10 +30,13 @@ public class ProductoServiceImpl implements ProductoServiceInterface{
 			
 			List<Producto> domainList = dao.getProductoByEAN(codigo, codigoProvedor, idDestino);
 			
+			if( domainList.size() > 0) {
 			return AssemblerProducto.domainToDto(domainList.get(0));
-		}else {
-			return null;
+			}
 		}
+		
+		return null;
+		
 	}
 	
 	@Override

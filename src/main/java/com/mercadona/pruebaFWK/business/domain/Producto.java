@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="PRODUCTO")
 @NamedQueries({ 
-	@NamedQuery(name = "Producto.GetByEAN", query="SELECT p FROM Producto p WHERE (p.codigo=: codigo) AND  (p.provedor.codigo =: codigoProvedor) AND (p.destino.id =: idDestino);")
+	@NamedQuery(name = "Producto.GetByEAN", query="SELECT p FROM Producto p WHERE (p.codigo=: codigo) AND  (p.provedor.codigo =: codigoProvedor) AND (p.destino.id =: idDestino)")
 	})
 public class Producto {
 
